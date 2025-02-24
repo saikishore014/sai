@@ -11,18 +11,21 @@ def generate_username(include_numbers=True, include_special_chars=False, length=
     noun = random.choice(nouns)
     username = adj + noun
 
+    extra_chars = ''
     if include_numbers:
-        username += str(random.randint(10, 99))
+        extra_chars += str(random.randint(10, 99))
 
     if include_special_chars:
         special_chars = '!@#$%^&*'
-        username += random.choice(special_chars)
+        extra_chars += random.choice(special_chars)
+
+    username += extra_chars
 
     if len(username) > length:
         username = username[:length]
     elif len(username) < length:
-        extra_chars = ''.join(random.choices(string.ascii_letters + string.digits, k=length - len(username)))
-        username += extra_chars
+        additional_chars = string.ascii_letters + string.digits + ('!@#$%^&*' if include_special_chars else '')
+        username += ''.join(random.choices(additional_chars, k=length - len(username)))
 
     return username
 
