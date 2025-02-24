@@ -4,7 +4,7 @@ Company: MotionCut
 
 Internship Details:
 
-● Position: Python programming Intern
+● Position: Python Programmer Intern
 
 ● Duration: 2 Months
 
