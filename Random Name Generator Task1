@@ -1,0 +1,64 @@
+import random
+import string
+
+# Lists of adjectives and nouns
+adjectives = ['Cool', 'Happy', 'Fierce', 'Brave', 'Bright', 'Sneaky', 'Witty', 'Clever', 'Swift', 'Bold']
+nouns = ['Tiger', 'Dragon', 'Panther', 'Falcon', 'Wolf', 'Phoenix', 'Eagle', 'Bear', 'Shark', 'Lion']
+
+# Function to generate a random username
+def generate_username(include_numbers=True, include_special_chars=False, length=10):
+    adj = random.choice(adjectives)
+    noun = random.choice(nouns)
+    username = adj + noun
+
+    if include_numbers:
+        username += str(random.randint(10, 99))
+
+    if include_special_chars:
+        special_chars = '!@#$%^&*'
+        username += random.choice(special_chars)
+
+    if len(username) > length:
+        username = username[:length]
+    elif len(username) < length:
+        extra_chars = ''.join(random.choices(string.ascii_letters + string.digits, k=length - len(username)))
+        username += extra_chars
+
+    return username
+
+# Function to display or simulate saving usernames to a file
+def display_or_save_usernames(usernames):
+    print("\nGenerated Usernames:")
+    for username in usernames:
+        print(username)
+
+    save_to_file = input("Would you like to simulate saving these usernames to a file? (yes/no): ").strip().lower() == 'yes'
+    if save_to_file:
+        print("\nSimulated saving to file...")
+        print("Saved usernames:")
+        for username in usernames:
+            print(username)
+
+# Main function to interact with the user
+def main():
+    print("Welcome to the Random Username Generator!")
+    try:
+        num_usernames = int(input("How many usernames would you like to generate? "))
+        if num_usernames <= 0:
+            print("Please enter a positive number.")
+            return
+        include_numbers = input("Include numbers? (yes/no): ").strip().lower() == 'yes'
+        include_special_chars = input("Include special characters? (yes/no): ").strip().lower() == 'yes'
+        length = int(input("Max length of usernames (minimum 5): "))
+        if length < 5:
+            print("Username length must be at least 5 characters.")
+            return
+    except ValueError:
+        print("Invalid input. Please enter numeric values where required.")
+        return
+
+    usernames = [generate_username(include_numbers, include_special_chars, length) for _ in range(num_usernames)]
+    display_or_save_usernames(usernames)
+
+if __name__ == "__main__":
+    main()
